@@ -130,13 +130,9 @@ persistence:
   accessMode: ReadWriteOnce
   size: 2Gi
 
-volumeMounts:
-  - name: data
-    mountPath: /usr/share/logstash/data
-  - name: patterns
-    mountPath: /usr/share/logstash/patterns
-  - name: pipeline
-    mountPath: /usr/share/logstash/pipeline
+# Define any additional volumes or mounts to use
+extraVolumeMounts: []
+extraVolumes: []
 
 exporter:
   logstash:

@@ -72,7 +72,15 @@ spec:
           resources:
 {{ toYaml .Values.resources | indent 12 }}
           volumeMounts:
-{{ toYaml .Values.volumeMounts | indent 12 }}
+            - name: data
+              mountPath: /usr/share/logstash/data
+            - name: patterns
+              mountPath: /usr/share/logstash/patterns
+            - name: pipeline
+              mountPath: /usr/share/logstash/pipeline
+            {{- if .Values.extraVolumeMounts }}
+{{ toYaml .Values.extraVolumeMounts | indent 12 }}
+            {{-end }}
 
 {{- if .Values.exporter.logstash.enabled }}
         ## logstash-exporter
@@ -125,6 +133,9 @@ spec:
         - name: pipeline
           configMap:
             name: {{ template "logstash.fullname" . }}-pipeline
+        {{- if .Values.extraVolumes }}
+{{ toYaml .Values.extraVolumes | indent 8 }}
+        {{- end }}
 
   volumeClaimTemplates:
     - metadata:
